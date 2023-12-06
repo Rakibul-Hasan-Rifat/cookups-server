@@ -26,7 +26,12 @@ app.listen(port, async () => {
         })
 
         app.get('/foods', async (req, res) => {
-            const foods = await client.db('foodDB').collection('foodsCollection').find({}).toArray()
+            const foods = await client
+                .db('foodDB')
+                .collection('foodsCollection')
+                .find({})
+                .toArray()
+
             res.send(foods)
         })
 
@@ -35,12 +40,11 @@ app.listen(port, async () => {
                 .db('foodDB')
                 .collection('foodsCollection')
                 .findOne({ _id: new ObjectId(req.params.id) })
-            // .toArray();
+
             res.send(foods)
         })
 
         app.get('/foods/:type', async (req, res) => {
-            console.log(req.params)
             const specificTypedFoods = await client
                 .db('foodDB')
                 .collection('foodsCollection')
@@ -50,7 +54,12 @@ app.listen(port, async () => {
         })
 
         app.get('/foodTypes', async (req, res) => {
-            const foodTypes = await client.db('foodDB').collection('foodTypes').find({}).toArray()
+            const foodTypes = await client
+                .db('foodDB')
+                .collection('foodTypes')
+                .find({})
+                .toArray()
+
             res.send(foodTypes)
         })
 
@@ -59,33 +68,47 @@ app.listen(port, async () => {
                 .db('foodDB')
                 .collection('foodTypes')
                 .findOne({ type: req.params.type })
+
             res.send(singleFoodType)
         })
 
         app.get('/orderedFoods/:email', async (req, res) => {
             console.log(req.params.email)
-            const result = await client.db('foodDB').collection('orderedFoods').find({ 'client.email': req.params.email }).toArray();
+            const result = await client
+                .db('foodDB')
+                .collection('orderedFoods')
+                .find({ 'client.email': req.params.email })
+                .toArray();
             res.send(result)
         })
 
         app.delete('/orderedFoods/:id', async (req, res) => {
             console.log(req.params.id)
-            const result = await client.db('foodDB').collection('orderedFoods').deleteOne({ _id: new ObjectId(req.params.id) })
+            const result = await client
+                .db('foodDB')
+                .collection('orderedFoods')
+                .deleteOne({ _id: new ObjectId(req.params.id) })
+            
             res.send(result)
         })
 
         app.post('/foodOrder', async (req, res) => {
             console.log(req.body)
-            const result = await client.db('foodDB').collection('orderedFoods').insertOne(req.body);
-            console.log(result)
+            const result = await client
+                .db('foodDB')
+                .collection('orderedFoods')
+                .insertOne(req.body);
+            
             res.send(result)
         })
 
         app.post('/addFood', async (req, res) => {
             const data = req.body;
-            console.log('you are nothing', data)
-            const result = await client.db('foodDB').collection('foodsCollection').insertOne(data)
-            console.log(result)
+            const result = await client
+                .db('foodDB')
+                .collection('foodsCollection')
+                .insertOne(data)
+
             res.send(result)
         })
 
