@@ -1,4 +1,3 @@
-// https://github.com/ProgrammingHero1/Brand-Shop/blob/main/task_description_10.md
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
